@@ -1,6 +1,11 @@
 const API = {
-    key: "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",
+    key: "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",
     url: "https://api.openai.com/v1/chat/completions"
-}
+};
 
-export {API};
+const model = "gpt-3.5-turbo";
+
+export {
+    API,
+    model
+};

@@ -9,7 +9,10 @@ import {
   TypingIndicator
 } from '@chatscope/chat-ui-kit-react';
 
-import {API} from './lib/constants';  
+import {
+  API,
+  model
+} from './lib/constants';  
 
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css'; 
 import './App.css';
@@ -26,15 +29,18 @@ const App = () => {
   ]);
   const [isTyping, setIsTyping] = useState(false);
 
-
    const processMessageToChatGPT = async (chatMessages) => {
     const apiMessages = chatMessages.map((messageObject) => {
       const role = messageObject.sender === "ChatGPT" ? "assistant" : "user";
-      return { role, content: messageObject.message };
+
+      return { 
+        role, 
+        content: messageObject.message 
+      };
     });
 
     const apiRequestBody = {
-      model: "gpt-3.5-turbo",
+      model: model,
       messages: [
         { role: "system", content: "I'm a Student using ChatGPT for learning" },
         ...apiMessages,
