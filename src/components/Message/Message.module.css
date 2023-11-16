@@ -1,0 +1,68 @@
+.message-container {
+    color: #fff;
+    display: flex;
+    margin-top: 25px;
+}
+
+.message-container > div {
+    padding: 8px 15px;
+    border-radius: 8px;
+    display: flex;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+}
+
+.message > div:nth-child(1) svg {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.you-svg {
+    color: #282d3c;
+}
+
+.chatgpt-svg {
+    color: #296ffd;
+}
+
+.message span {
+    text-transform: capitalize;
+    margin-bottom: 6px;
+}
+
+.message > div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+}
+
+.message > div:nth-child(2) > div {
+    text-indent: 5px;
+    display: flex;
+}
+
+.flex-right {
+    justify-content: end;
+}
+
+.cursor {
+    display: inline-block;
+    width: 1ch;
+    animation: flicker 0.5s infinite;
+}
+
+@keyframes flicker {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

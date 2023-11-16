@@ -1,13 +1,15 @@
 .app-container {
-  height: inherit;
+  height: 100%;
   padding: 75px;
-  background-color: #14161a;
 }
 
-.app-container .chat-container {
-  height: inherit;
+.chat-container {
+  height: 100%;
+}
+
+.messages-container {
+  height: 100%;
+  background-color: rgba(52, 53, 54, 1);
+  padding: 15px 30px;
+  border-radius: 8px;  
 };
-
-.app-container .cs-main-container {
-  padding: 100px;  
-}

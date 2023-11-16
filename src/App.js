@@ -1,26 +1,20 @@
-import { useState }  from 'react';
-
-import {
-  MainContainer,
-  ChatContainer,
-  MessageList,
-  Message,
-  MessageInput,
-  TypingIndicator
-} from '@chatscope/chat-ui-kit-react';
+import { useState, useEffect } from 'react';
 
 import {
   API,
   model
-} from './lib/constants';  
+} from './lib/constants';
 
-import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css'; 
 import './App.css';
+import Message from './components/Message/Message';
+import Input from './components/Input/Input';
 
 const App = () => {
-  const [messages, setMessages] = useState([  
+  const day = new Date().toLocaleString('en-us', {weekday:'long'})
+
+  const [messages, setMessages] = useState([
     {
-      message: "Hello, I'm ChatGPT! Ask me anything!",
+      message: `Hello, happy ${day}! Ask me anything!`,
       sentTime: "just now",
       sender: "ChatGPT",
       position: "single",
@@ -28,14 +22,15 @@ const App = () => {
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);
+  const [prompt, setPrompt] = useState('');
 
-   const processMessageToChatGPT = async (chatMessages) => {
+  const processMessageToChatGPT = async (chatMessages) => {
     const apiMessages = chatMessages.map((messageObject) => {
       const role = messageObject.sender === "ChatGPT" ? "assistant" : "user";
 
-      return { 
-        role, 
-        content: messageObject.message 
+      return {
+        role,
+        content: messageObject.message
       };
     });
 
@@ -54,23 +49,29 @@ const App = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(apiRequestBody),
-    });
+    });  
 
     return response.json();
   }
 
-  const handleSendRequest = async (message) => {
+  const handleSendRequest = async () => {
     const newMessage = {
-      message,
+      message: prompt,
       direction: 'outgoing',
-      sender: "user",
+      sender: "you",
     };
+
+    console.log("newMessage", newMessage);
 
     setMessages((prevMessages) => [...prevMessages, newMessage]);
     setIsTyping(true);
+    setPrompt("");
 
     try {
       const response = await processMessageToChatGPT([...messages, newMessage]);
+
+      console.log("response", response);
+
       const content = response.choices[0]?.message?.content;
       if (content) {
         const chatGPTResponse = {
@@ -86,22 +87,28 @@ const App = () => {
     }
   };
 
+  useEffect(() => {
+
+    console.log("messages", messages);
+
+  }, [messages]);
+
   return (
     <div className="app-container">
-      <div className="chat-container">  
-        <MainContainer className="primary-background-color" responsive>
-          <ChatContainer className="primary-background-color">       
-            <MessageList 
-              scrollBehavior="smooth" 
-              typingIndicator={isTyping ? <TypingIndicator content="ChatGPT is typing" /> : null}
-            >
-              {messages.map((message, i) => {
-                return <Message key={i} model={message}/>  
-              })}
-            </MessageList>  
-            <MessageInput attachButton={false} placeholder="Send a Message" onSend={handleSendRequest} />        
-          </ChatContainer>
-        </MainContainer>
+      <div className="chat-container"> 
+        <div className="messages-container">
+          {messages.map((message, i) => {
+            return (
+              <Message key={i} message={message} />
+            )
+          })}
+        </div>
+        <Input 
+          handleSendRequest={handleSendRequest} 
+          prompt={prompt} 
+          setPrompt={setPrompt} 
+          isTyping={isTyping}
+          />
       </div>
     </div>
   )
