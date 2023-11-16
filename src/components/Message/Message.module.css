@@ -31,6 +31,7 @@
 .message span {
     text-transform: capitalize;
     margin-bottom: 6px;
+    color: #fff;
 }
 
 .message > div:nth-child(2) {
@@ -41,6 +42,7 @@
 .message > div:nth-child(2) > div {
     text-indent: 5px;
     display: flex;
+    color: #fff;
 }
 
 .flex-right {
