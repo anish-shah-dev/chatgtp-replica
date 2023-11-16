@@ -37,7 +37,7 @@ const Message = ({ message }) => {
         }
 
         return () => clearInterval(intervalId);
-    }, [content]);
+    }, [content, sender]);
 
     return (
         <div className={`${classes['message-container']}`}>
