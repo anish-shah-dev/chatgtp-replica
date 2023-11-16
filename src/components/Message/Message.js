@@ -40,7 +40,7 @@ const Message = ({ message }) => {
     }, [content, sender]);
 
     return (
-        <div className={`${classes['message-container']}`}>
+        <div className={classes['message-container']}>
             <div className={`${sender === "you" ? classes.user : classes.chatgpt}`}>
                 <div className={classes.message}>
                     <div>
